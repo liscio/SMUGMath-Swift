@@ -7,29 +7,89 @@
 //
 
 import XCTest
+import SMUGMath
 
 class SMUGMathTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testConstruction() {
+        var a = RealVector<Float>(components: [1, 2, 3]);
+        XCTAssertTrue( a[0] == 1 && a[1] == 2 && a[2] == 3, "Did not get expected components" );
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+    func testAddition() {
+        var a = RealVector<Float>(components: [1, 2, 3]);
+        var b = RealVector<Float>(components: [1, 2, 3]);
+        
+        var c = a + b;
+        
+        XCTAssertEqualWithAccuracy( c[0], 2.0, FLT_EPSILON );
+        XCTAssertEqualWithAccuracy( c[1], 4.0, FLT_EPSILON );
+        XCTAssertEqualWithAccuracy( c[2], 6.0, FLT_EPSILON );
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+    func testMultiplication() {
+        var a = RealVector<Float>(components: [1, 2, 3]);
+        var b = RealVector<Float>(components: [1, 2, 3]);
+        
+        var c = a * b;
+        
+        XCTAssertEqualWithAccuracy( c[0], 1.0, FLT_EPSILON );
+        XCTAssertEqualWithAccuracy( c[1], 4.0, FLT_EPSILON );
+        XCTAssertEqualWithAccuracy( c[2], 9.0, FLT_EPSILON );
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
+    func testFFT() {
+        var a = RealVector<Float>(count: 2048)
+        a[0] = 1.0
+        
+        var setup = create_fft_setup(2048)
+        
+        var result = fft(setup, a, 2048)
+        println( "result is \(result)" )
+    }
+    
+    func testRanging() {
+        var a = RealVector<Float>(count: 1024)
+        for i in 0..a.count {
+            a[i] = Float(i)
+        }
+        
+        var b = a[0..10]
+        println( "b is \(b)")
+        
+        var c = a[3..17]
+        println( "c is \(c)")
+        
+        a.withRealVectorInRange(7...14) {
+            vector in
+            println( "subvector is \(vector)" )
         }
     }
     
+    func testBlockFFT() {
+        let totalSignalLength = 1024 * 1024
+        let blockSize = 1024
+        let skipLength = 256
+        
+        var setup = create_fft_setup(blockSize)
+        
+        let fakeSignal = RealVector<Float>(count: totalSignalLength)
+        
+        let blockCount = totalSignalLength / skipLength
+
+        for i in 0..blockCount {
+            let startIndex = i*skipLength
+            let endIndex = startIndex + blockSize
+            if ( endIndex >= totalSignalLength ) {
+                // TODO: Figure out padding
+                break;
+            }
+            
+            fakeSignal.withRealVectorInRange(startIndex..endIndex) {
+                let result = fft( setup, $0, blockSize )
+            }
+        }
+        
+        
+    }
 }
