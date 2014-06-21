@@ -87,6 +87,8 @@ class SMUGMathTests: XCTestCase {
             
             fakeSignal.withRealVectorInRange(startIndex..endIndex) {
                 let result = fft( setup, $0, blockSize )
+                
+                let realSpectra = abs(result[1...result.count/2])
             }
         }
         
