@@ -39,7 +39,7 @@ class SMUGMathTests: XCTestCase {
     }
     
     func testFFT() {
-        var a = RealVector<Float>(count: 2048)
+        var a = RealVector<Float>(count: 2048, repeatedValue: 0)
         a[0] = 1.0
         
         var setup = create_fft_setup(2048)
@@ -49,7 +49,7 @@ class SMUGMathTests: XCTestCase {
     }
     
     func testRanging() {
-        var a = RealVector<Float>(count: 1024)
+        var a = RealVector<Float>(count: 1024, repeatedValue: 0)
         for i in 0..a.count {
             a[i] = Float(i)
         }
@@ -73,7 +73,7 @@ class SMUGMathTests: XCTestCase {
         
         var setup = create_fft_setup(blockSize)
         
-        let fakeSignal = RealVector<Float>(count: totalSignalLength)
+        let fakeSignal = RealVector<Float>(count: totalSignalLength, repeatedValue: 0)
         
         let blockCount = totalSignalLength / skipLength
 
@@ -87,10 +87,6 @@ class SMUGMathTests: XCTestCase {
             
             fakeSignal.withRealVectorInRange(startIndex..endIndex) {
                 let result = fft( setup, $0, blockSize )
-                
-                // TODO: This should not be allowed!!!
-                //$0[4..7] = RealVector<Float>(components: [1.0, 2.0, 3.0] );
-                
                 let realSpectra = abs(result[1...result.count/2])
             }
         }

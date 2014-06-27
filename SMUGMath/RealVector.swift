@@ -9,25 +9,15 @@
 import Foundation
 import Accelerate
 
-class RealVector<T> : Printable {
-    var components: UnsafePointer<T>
-    var count = 0
-    init( count: Int ) {
-        self.count = count
-        components = UnsafePointer<T>.alloc(count)
-    }
-    init( components: UnsafePointer<T>, count: Int ) {
-        self.components = UnsafePointer<T>(components)
-        self.count = count
-    }
-    deinit {
-        // Will this be a problem for the init( components, count ) case? In that instance, we're handed an UnsafePointer<T> that wasn't alloc()ed by us. Could it be that UnsafePointer<T> is smart enough to know whether it was alloc'd?
-        components.destroy()
+struct RealVector<T> : Printable {
+    var components: Array<T>
+    
+    init(components: Array<T>) {
+        self.components = components
     }
     
-    convenience init(components: Array<T>) {
-        self.init(count: components.count)
-        self.components.initializeFrom(components)
+    init(count: Int, repeatedValue: T) {
+        components = Array<T>(count: count, repeatedValue: repeatedValue)
     }
     
     subscript(i: Int) -> T {
@@ -39,11 +29,18 @@ class RealVector<T> : Printable {
         }
     }
     
+    var count: Int {
+        get {
+            return components.count;
+        }
+    }
+    
     subscript(range: Range<Int>) -> RealVector<T> {
         get {
             assert( range.startIndex < self.count )
             assert( range.endIndex < self.count )
-            return RealVector<T>(components: components + range.startIndex, count: (range.endIndex - range.startIndex) )
+            // TODO: Figure out what to do about adding a copy operation by coercing a Slice<T> to an Array<T>
+            return RealVector<T>( components: Array(components[range]) )
         }
         set(newValue) {
             assert( range.startIndex < self.count )
@@ -58,7 +55,8 @@ class RealVector<T> : Printable {
     func withRealVectorInRange(range: Range<Int>, method:RealVector<T> -> Void) {
         assert( range.startIndex < self.count )
         assert( range.endIndex < self.count )
-        method( RealVector<T>(components: components + range.startIndex, count: (range.endIndex - range.startIndex ) ) )
+        // TODO: Figure out what to do about adding a copy operation by coercing a Slice<T> to an Array<T>
+        method( RealVector<T>( components: Array(components[range]) ) )
     }
     
     var description: String {
