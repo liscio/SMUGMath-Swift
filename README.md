@@ -28,7 +28,5 @@ let magnitude = abs(result[1..result.count/2])
 
 ### Wishlist (read: Things that likely won't happen...)
 
-* Mutable vs Immutable vectors: I'd love to be able to work on blocks of a vector on separate threads and not worry about stomping on a vector's contents.
-
 * "Everything is a Matrix" - Like MATLAB, it'd be nice if there really was no differentiation between the types. That's asking a lot, though. The new Accelerate stuff in Yosemite/iOS8 may help make that happen.
 
