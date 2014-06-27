@@ -45,6 +45,14 @@ class RealVector<T> : Printable {
             assert( range.endIndex < self.count )
             return RealVector<T>(components: components + range.startIndex, count: (range.endIndex - range.startIndex) )
         }
+        set(newValue) {
+            assert( range.startIndex < self.count )
+            assert( range.endIndex < self.count )
+            assert( newValue.count == ( range.endIndex - range.startIndex ) );
+            for i in range.startIndex..range.endIndex {
+                self[i] = newValue[i-range.startIndex]
+            }
+        }
     }
     
     func withRealVectorInRange(range: Range<Int>, method:RealVector<T> -> Void) {
