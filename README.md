@@ -9,10 +9,10 @@ In a perfect world I'd have a programming environment that approaches MATLAB in 
 ### Example Usage
 
 ```
-let a = RealVector<Float>(count: 2048)
+let a = [Float](count: 2048, repeatedValue: 0)
 // Fill a with stuff
 
-let b = RealVector<Float>(count: 2048)
+let b = [Float](count: 2048, repeatedValue: 0)
 // Fill b with stuff
 
 let c = a * b // ooh, so exciting!
@@ -23,7 +23,7 @@ let setup = create_fft_setup( 2048 )
 let result = fft( setup, a * window, 2048 )
 
 // Grab the magnitude of the spectrum
-let magnitude = abs(result[1..result.count/2])
+let magnitude = abs(result[1..<result.count/2])
 ```
 
 ### Wishlist (read: Things that likely won't happen...)
