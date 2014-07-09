@@ -14,8 +14,8 @@ func create_fft_setup( length: Int ) -> FFTSetup {
 }
 
 func fft( setup: FFTSetup, x: [Float], fft_length: Int ) -> SplitComplexVector<Float> {
-    var splitComplex = SplitComplexVector<Float>(count: x.count / 2)
-    var dspSplitComplex = DSPSplitComplex( realp: splitComplex.real, imagp: splitComplex.imag )
+    var splitComplex = SplitComplexVector<Float>(count: x.count / 2, repeatedValue: Complex<Float>(real: 0, imag: 0))
+    var dspSplitComplex = DSPSplitComplex( realp: splitComplex.real.withUnsafePointerToElements {$0}, imagp: splitComplex.imag.withUnsafePointerToElements { $0 } )
 
     x.withUnsafePointerToElements() { (elements: UnsafePointer<Float>) -> () in
         var xAsComplex = UnsafePointer<DSPComplex>(elements)
@@ -29,8 +29,8 @@ func fft( setup: FFTSetup, x: [Float], fft_length: Int ) -> SplitComplexVector<F
 
 // TODO: Figure out how to avoid duplicating the FFT implementation for both [Float] and Slice<Float>
 func fft( setup: FFTSetup, x: Slice<Float>, fft_length: Int ) -> SplitComplexVector<Float> {
-    var splitComplex = SplitComplexVector<Float>(count: x.count / 2)
-    var dspSplitComplex = DSPSplitComplex( realp: splitComplex.real, imagp: splitComplex.imag )
+    var splitComplex = SplitComplexVector<Float>(count: x.count / 2, repeatedValue: Complex<Float>(real: 0, imag: 0))
+    var dspSplitComplex = DSPSplitComplex( realp: splitComplex.real.withUnsafePointerToElements {$0}, imagp: splitComplex.imag.withUnsafePointerToElements { $0 } )
     
     x.withUnsafePointerToElements() { (elements: UnsafePointer<Float>) -> () in
         var xAsComplex = UnsafePointer<DSPComplex>(elements)

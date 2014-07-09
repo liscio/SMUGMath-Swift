@@ -64,9 +64,7 @@ class SMUGMathTests: XCTestCase {
             
             let range = startIndex..<endIndex
             let result = fft( setup, fakeSignal[range], blockSize )
-            let realSpectra = abs(result[1...result.count/2])
+            let realSpectra = abs(result)[1...result.count/2]
         }
-        
-        
     }
 }

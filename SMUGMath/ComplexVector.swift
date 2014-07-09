@@ -13,35 +13,39 @@ struct Complex<T> {
     var imag: T
 }
 
-class SplitComplexVector<T> {
-    var real: UnsafePointer<T>
-    var imag: UnsafePointer<T>
-    var count = 0
+struct SplitComplexVector<T> {
+    var real: [T]
+    var imag: [T]
     
-    init(count: Int) {
-        self.count = count
-        real = UnsafePointer<T>.alloc(count)
-        imag = UnsafePointer<T>.alloc(count)
-    }
-    init(real: UnsafePointer<T>, imag: UnsafePointer<T>, count: Int) {
-        self.count = count
+    init( real: [T], imag: [T] ) {
         self.real = real
         self.imag = imag
     }
-    deinit {
-        real.destroy()
-        imag.destroy()
+    
+    init( count: Int, repeatedValue: Complex<T> ) {
+        self.real = [T]( count: count, repeatedValue: repeatedValue.real )
+        self.imag = [T]( count: count, repeatedValue: repeatedValue.imag )
     }
     
     subscript(i: Int) -> Complex<T> {
         return Complex<T>(real: real[i], imag: imag[i]);
     }
     
+    var count: Int {
+        get {
+            return real.count
+        }
+    }
+    
     subscript(range: Range<Int>) -> SplitComplexVector<T> {
         get {
             assert( range.startIndex < self.count )
             assert( range.endIndex < self.count )
-            return SplitComplexVector<T>(real: real + range.startIndex, imag: imag + range.startIndex, count: (range.endIndex - range.startIndex) )
+            
+            let rangedReal = Array(real[range])
+            let rangedImag = Array(imag[range])
+            
+            return SplitComplexVector<T>( real: rangedReal, imag: rangedImag )
         }
     }
 }
