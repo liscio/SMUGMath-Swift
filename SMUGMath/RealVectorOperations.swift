@@ -9,42 +9,56 @@
 import Foundation
 import Accelerate
 
-@infix func * (left: RealVector<Float>, right: RealVector<Float>) -> RealVector<Float> {
-    assert( left.count == right.count );
-    var result = RealVector<Float>(count: left.count, repeatedValue: 0);
-    vDSP_vmul(left.components, 1, right.components, 1, &result.components, 1, vDSP_Length(result.count));
+/*
+ * Multiplication
+ */
+
+@infix func * (left: [Float], right: [Float] ) -> [Float] {
+    assert( left.count == right.count )
+    var result = [Float](count: left.count, repeatedValue: 0)
+    vDSP_vmul( left, 1, right, 1, &result, 1, vDSP_Length(left.count) )
+    return result
+}
+
+@infix func * (left: [Double], right: [Double] ) -> [Double] {
+    assert( left.count == right.count )
+    var result = [Double](count: left.count, repeatedValue: 0)
+    vDSP_vmulD( left, 1, right, 1, &result, 1, vDSP_Length(left.count) )
+    return result
+}
+
+/*
+ * Division
+ */
+
+@infix func / (left: [Float], right: [Float] ) -> [Float] {
+    assert( left.count == right.count )
+    var result = [Float]( count: left.count, repeatedValue: 0 )
+    vDSP_vdiv( right, 1, left, 1, &result, 1, vDSP_Length(left.count) )
     return result;
 }
 
-@infix func + (left: RealVector<Float>, right: RealVector<Float>) -> RealVector<Float> {
-    assert( left.count == right.count );
-    var result = RealVector<Float>(count: left.count, repeatedValue: 0);
-    vDSP_vadd(left.components, 1, right.components, 1, &result.components, 1, vDSP_Length(result.count));
+@infix func / (left: [Double], right: [Double] ) -> [Double] {
+    assert( left.count == right.count )
+    var result = [Double]( count: left.count, repeatedValue: 0 )
+    vDSP_vdivD( right, 1, left, 1, &result, 1, vDSP_Length(left.count) )
     return result;
 }
 
-@infix func * (left: RealVector<Double>, right: RealVector<Double>) -> RealVector<Double> {
-    assert( left.count == right.count );
-    var result = RealVector<Double>(count: left.count, repeatedValue: 0);
-    vDSP_vmulD(left.components, 1, right.components, 1, &result.components, 1, vDSP_Length(result.count));
-    return result;
+/*
+ * Addition
+ */
+
+@infix func + (left: [Float], right: [Float] ) -> [Float] {
+    assert( left.count == right.count )
+    var result = [Float]( count: left.count, repeatedValue: 0 )
+    vDSP_vadd( left, 1, right, 1, &result, 1, vDSP_Length(left.count) )
+    return result
 }
 
-@infix func + (left: RealVector<Double>, right: RealVector<Double>) -> RealVector<Double> {
-    assert( left.count == right.count );
-    var result = RealVector<Double>(count: left.count, repeatedValue: 0);
-    vDSP_vaddD(left.components, 1, right.components, 1, &result.components, 1, vDSP_Length(result.count));
-    return result;
-}
-
-@infix func * (left: RealVector<Float>, right: Float) -> RealVector<Float> {
-    var result = RealVector<Float>(count: left.count, repeatedValue: 0)
-    vDSP_vsmul(left.components, 1, [right], &result.components, 1, vDSP_Length(left.count))
-    return result;
-}
-
-@infix func * (left: RealVector<Double>, right: Double) -> RealVector<Double> {
-    var result = RealVector<Double>(count: left.count, repeatedValue: 0)
-    vDSP_vsmulD(left.components, 1, [right], &result.components, 1, vDSP_Length(left.count))
-    return result;
+@infix func + (left: [Double], right: [Double] ) -> [Double] {
+    assert( left.count == right.count )
+    var result = [Double]( count: left.count, repeatedValue: 0 )
+    vDSP_vaddD( left, 1, right, 1, &result, 1, vDSP_Length(left.count) )
+    return result
 }

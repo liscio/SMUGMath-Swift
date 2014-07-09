@@ -59,7 +59,7 @@ extension SplitComplexVector : Printable {
     get {
         let maxElements = 25
         var desc = "["
-        for i in 0..min(self.count, maxElements) {
+        for i in 0..<min(self.count, maxElements) {
             desc += "\(self[i])";
             if ( i < self.count - 1 ) {
                 desc += ", "
