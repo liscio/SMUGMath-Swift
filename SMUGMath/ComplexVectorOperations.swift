@@ -9,19 +9,19 @@
 import Foundation
 import Accelerate
 
-func abs( x: SplitComplexVector<Float> ) -> [Float] {
+public func abs( var x: SplitComplexVector<Float> ) -> [Float] {
     var result = [Float]( count: x.count, repeatedValue: 0 )
-    var dspSplitComplex = DSPSplitComplex( realp: x.real.withUnsafePointerToElements { $0 }, imagp: x.imag.withUnsafePointerToElements{ $0 } )
-    
+
+    var dspSplitComplex = DSPSplitComplex( realp: &x.real, imagp: &x.imag )
     vDSP_zvabs( &dspSplitComplex, 1, &result, 1, vDSP_Length(x.count) )
     
     return result
 }
 
-func abs( x: SplitComplexVector<Double> ) -> [Double] {
+public func abs( var x: SplitComplexVector<Double> ) -> [Double] {
     var result = [Double]( count:x.count, repeatedValue: 0 )
-    var dspSplitComplex = DSPDoubleSplitComplex( realp: x.real.withUnsafePointerToElements { $0 }, imagp: x.imag.withUnsafePointerToElements{ $0 } )
-    
+
+    var dspSplitComplex = DSPDoubleSplitComplex( realp: &x.real, imagp: &x.imag )
     vDSP_zvabsD( &dspSplitComplex, 1, &result, 1, vDSP_Length(x.count) )
     
     return result

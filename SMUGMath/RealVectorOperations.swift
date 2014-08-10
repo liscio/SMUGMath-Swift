@@ -13,14 +13,14 @@ import Accelerate
  * Multiplication
  */
 
-@infix func * (left: [Float], right: [Float] ) -> [Float] {
+public func * (left: [Float], right: [Float] ) -> [Float] {
     assert( left.count == right.count )
     var result = [Float](count: left.count, repeatedValue: 0)
     vDSP_vmul( left, 1, right, 1, &result, 1, vDSP_Length(left.count) )
     return result
 }
 
-@infix func * (left: [Double], right: [Double] ) -> [Double] {
+public func * (left: [Double], right: [Double] ) -> [Double] {
     assert( left.count == right.count )
     var result = [Double](count: left.count, repeatedValue: 0)
     vDSP_vmulD( left, 1, right, 1, &result, 1, vDSP_Length(left.count) )
@@ -31,14 +31,14 @@ import Accelerate
  * Division
  */
 
-@infix func / (left: [Float], right: [Float] ) -> [Float] {
+public func / (left: [Float], right: [Float] ) -> [Float] {
     assert( left.count == right.count )
     var result = [Float]( count: left.count, repeatedValue: 0 )
     vDSP_vdiv( right, 1, left, 1, &result, 1, vDSP_Length(left.count) )
     return result;
 }
 
-@infix func / (left: [Double], right: [Double] ) -> [Double] {
+public func / (left: [Double], right: [Double] ) -> [Double] {
     assert( left.count == right.count )
     var result = [Double]( count: left.count, repeatedValue: 0 )
     vDSP_vdivD( right, 1, left, 1, &result, 1, vDSP_Length(left.count) )
@@ -49,14 +49,14 @@ import Accelerate
  * Addition
  */
 
-@infix func + (left: [Float], right: [Float] ) -> [Float] {
+public func + (left: [Float], right: [Float] ) -> [Float] {
     assert( left.count == right.count )
     var result = [Float]( count: left.count, repeatedValue: 0 )
     vDSP_vadd( left, 1, right, 1, &result, 1, vDSP_Length(left.count) )
     return result
 }
 
-@infix func + (left: [Double], right: [Double] ) -> [Double] {
+public func + (left: [Double], right: [Double] ) -> [Double] {
     assert( left.count == right.count )
     var result = [Double]( count: left.count, repeatedValue: 0 )
     vDSP_vaddD( left, 1, right, 1, &result, 1, vDSP_Length(left.count) )

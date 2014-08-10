@@ -8,14 +8,14 @@
 
 import Foundation
 
-struct Complex<T> {
+public struct Complex<T> {
     var real: T
     var imag: T
 }
 
-struct SplitComplexVector<T> {
-    var real: [T]
-    var imag: [T]
+public struct SplitComplexVector<T> {
+    public var real: [T]
+    public var imag: [T]
     
     init( real: [T], imag: [T] ) {
         self.real = real
@@ -31,7 +31,7 @@ struct SplitComplexVector<T> {
         return Complex<T>(real: real[i], imag: imag[i]);
     }
     
-    var count: Int {
+    public var count: Int {
         get {
             return real.count
         }
@@ -51,7 +51,7 @@ struct SplitComplexVector<T> {
 }
 
 extension Complex : Printable {
-    var description: String {
+    public var description: String {
     get {
         return "\(self.real)+\(self.imag)i";
     }
@@ -59,7 +59,7 @@ extension Complex : Printable {
 }
 
 extension SplitComplexVector : Printable {
-    var description: String {
+    public var description: String {
     get {
         let maxElements = 25
         var desc = "["
