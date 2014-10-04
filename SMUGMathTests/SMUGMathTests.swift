@@ -17,9 +17,9 @@ class SMUGMathTests: XCTestCase {
         
         var c = a + b;
         
-        XCTAssertEqualWithAccuracy( c[0], 2.0, FLT_EPSILON );
-        XCTAssertEqualWithAccuracy( c[1], 4.0, FLT_EPSILON );
-        XCTAssertEqualWithAccuracy( c[2], 6.0, FLT_EPSILON );
+        XCTAssertEqualWithAccuracy( c[0], Float(2.0), FLT_EPSILON );
+        XCTAssertEqualWithAccuracy( c[1], Float(4.0), FLT_EPSILON );
+        XCTAssertEqualWithAccuracy( c[2], Float(6.0), FLT_EPSILON );
     }
     
     func testMultiplication() {
@@ -28,9 +28,9 @@ class SMUGMathTests: XCTestCase {
         
         var c = a * b;
         
-        XCTAssertEqualWithAccuracy( c[0], 1.0, FLT_EPSILON );
-        XCTAssertEqualWithAccuracy( c[1], 4.0, FLT_EPSILON );
-        XCTAssertEqualWithAccuracy( c[2], 9.0, FLT_EPSILON );
+        XCTAssertEqualWithAccuracy( c[0], Float(1.0), FLT_EPSILON );
+        XCTAssertEqualWithAccuracy( c[1], Float(4.0), FLT_EPSILON );
+        XCTAssertEqualWithAccuracy( c[2], Float(9.0), FLT_EPSILON );
     }
     
     func testFFT() {
