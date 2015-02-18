@@ -52,15 +52,12 @@ public struct SplitComplexVector<T> {
 
 extension Complex : Printable {
     public var description: String {
-    get {
         return "\(self.real)+\(self.imag)i";
-    }
     }
 }
 
 extension SplitComplexVector : Printable {
     public var description: String {
-    get {
         let maxElements = 25
         var desc = "["
         for i in 0..<min(self.count, maxElements) {
@@ -74,7 +71,6 @@ extension SplitComplexVector : Printable {
         }
         desc += "]";
         return desc;
-    }
     }
 }
 

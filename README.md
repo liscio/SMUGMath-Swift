@@ -25,8 +25,3 @@ let result = fft( setup, a * window, 2048 )
 // Grab the magnitude of the spectrum
 let magnitude = abs(result[1..<result.count/2])
 ```
-
-### Wishlist (read: Things that likely won't happen...)
-
-* "Everything is a Matrix" - Like MATLAB, it'd be nice if there really was no differentiation between the types. That's asking a lot, though. The new Accelerate stuff in Yosemite/iOS8 may help make that happen.
-

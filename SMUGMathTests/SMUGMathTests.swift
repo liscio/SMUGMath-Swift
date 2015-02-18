@@ -15,7 +15,7 @@ class SMUGMathTests: XCTestCase {
         var a : [Float] = [1, 2, 3]
         var b : [Float] = [1, 2, 3]
         
-        var c = a + b;
+        var c = add(a, b)
         
         XCTAssertEqualWithAccuracy( c[0], Float(2.0), FLT_EPSILON );
         XCTAssertEqualWithAccuracy( c[1], Float(4.0), FLT_EPSILON );
@@ -26,7 +26,7 @@ class SMUGMathTests: XCTestCase {
         var a: [Float] = [1, 2, 3];
         var b: [Float] = [1, 2, 3];
         
-        var c = a * b;
+        var c = a * b
         
         XCTAssertEqualWithAccuracy( c[0], Float(1.0), FLT_EPSILON );
         XCTAssertEqualWithAccuracy( c[1], Float(4.0), FLT_EPSILON );
@@ -45,7 +45,7 @@ class SMUGMathTests: XCTestCase {
     
     func testBlockFFT() {
         let totalSignalLength = 1024 * 1024
-        let blockSize = 1024
+        let blockSize = 8192
         let skipLength = 256
         
         var setup = create_fft_setup(blockSize)

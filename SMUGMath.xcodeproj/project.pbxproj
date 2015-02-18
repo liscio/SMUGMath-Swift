@@ -15,6 +15,7 @@
 		836426E01955BB7000356D57 /* Windowing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836426DF1955BB7000356D57 /* Windowing.swift */; };
 		836426E21955BBAD00356D57 /* FFTOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836426E11955BBAD00356D57 /* FFTOperations.swift */; };
 		836426E41955BBE200356D57 /* ComplexVectorOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836426E31955BBE200356D57 /* ComplexVectorOperations.swift */; };
+		83D9EBEC1A9535F9006A6AF5 /* Unsafeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D9EBEB1A9535F9006A6AF5 /* Unsafeable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 		836426DF1955BB7000356D57 /* Windowing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Windowing.swift; sourceTree = "<group>"; };
 		836426E11955BBAD00356D57 /* FFTOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFTOperations.swift; sourceTree = "<group>"; };
 		836426E31955BBE200356D57 /* ComplexVectorOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexVectorOperations.swift; sourceTree = "<group>"; };
+		83D9EBEB1A9535F9006A6AF5 /* Unsafeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Unsafeable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			children = (
 				836426C21954D1E100356D57 /* SMUGMath.h */,
 				836426C01954D1E100356D57 /* Supporting Files */,
+				83D9EBEB1A9535F9006A6AF5 /* Unsafeable.swift */,
 				836426DB1955BA7800356D57 /* ComplexVector.swift */,
 				836426DD1955BB2900356D57 /* RealVectorOperations.swift */,
 				836426E31955BBE200356D57 /* ComplexVectorOperations.swift */,
@@ -230,6 +233,7 @@
 				836426DE1955BB2900356D57 /* RealVectorOperations.swift in Sources */,
 				836426DC1955BA7800356D57 /* ComplexVector.swift in Sources */,
 				836426E41955BBE200356D57 /* ComplexVectorOperations.swift in Sources */,
+				83D9EBEC1A9535F9006A6AF5 /* Unsafeable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
