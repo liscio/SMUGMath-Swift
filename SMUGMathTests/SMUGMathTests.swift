@@ -133,4 +133,26 @@ class SMUGMathTests: XCTestCase {
             let _ = result.abs()[1...result.count/2]
         }
     }
+    
+    /// This is _obviously_ going to run slower since each map/filter needs to be evaluated. That said, it's also different in that it's expecting a list of vectors
+    func testMapBlockFFT() {
+        let totalSignalLength = 1024 * 1024
+        let blockSize = 8192
+        let skipLength = 256
+        
+        let context = FFTContext<SMUGMath.FFTSetup>(length: blockSize)
+        let fakeSignal = Vector<Float>(zeros: totalSignalLength)
+        let blockCount = fakeSignal.count / skipLength
+        
+        let fftRanges = Array<Int>(0..<blockCount)
+            .map { $0 * skipLength }                    // Scale by the skip length
+            .map { $0..<$0+blockSize }                  // Create ranges for each FFT slice
+            .filter { $0.endIndex < fakeSignal.count }  // Don't let it exceed the length of the input
+
+        let _ = fftRanges
+            .map { (range: Range<Int>) -> VectorSlice<Float> in
+                let X = fakeSignal[range].dft(context)
+                return X.abs()[1...X.count/2]
+            }
+    }
 }
