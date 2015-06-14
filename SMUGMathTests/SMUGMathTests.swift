@@ -89,28 +89,48 @@ class SMUGMathTests: XCTestCase {
         XCTAssertEqual(a, inverse)
     }
     
-//    func testBlockFFT() {
-//        let totalSignalLength = 1024 * 1024
-//        let blockSize = 8192
-//        let skipLength = 256
-//        
-//        var setup = create_fft_setup(blockSize)
-//        
-//        let fakeSignal = [Float](count: totalSignalLength, repeatedValue: 0)
-//        
-//        let blockCount = totalSignalLength / skipLength
-//
-//        for i in 0..<blockCount {
-//            let startIndex = i*skipLength
-//            let endIndex = startIndex + blockSize
-//            if ( endIndex >= totalSignalLength ) {
-//                // TODO: Figure out padding
-//                break;
-//            }
-//            
-//            let range = startIndex..<endIndex
-//            let result = fft( setup, fakeSignal[range], blockSize )
-//            let realSpectra = abs(result)[1...result.count/2]
-//        }
-//    }
+    func testRampCreation() {
+        let largeVector = Vector<Float>(integersRangingFrom:0, to: 2048)
+        XCTAssertEqual(largeVector.count, 2048)
+        XCTAssertEqualWithAccuracy(largeVector[0], 0, accuracy: FLT_EPSILON)
+        XCTAssertEqualWithAccuracy(largeVector[2047], 2047, accuracy: FLT_EPSILON)
+    }
+
+    func testDoubleRampCreation() {
+        let largeVector = Vector<Double>(integersRangingFrom:0, to: 2048)
+        XCTAssertEqual(largeVector.count, 2048)
+        XCTAssertEqualWithAccuracy(largeVector[0], 0, accuracy: DBL_EPSILON)
+        XCTAssertEqualWithAccuracy(largeVector[2047], 2047, accuracy: DBL_EPSILON)
+    }
+    
+    func testRangedAccess() {
+        let largeVector = Vector<Float>(integersRangingFrom:0, to: 2048)
+
+        let range = 0..<128
+        let ranged: Vector<Float> = largeVector[range]
+        
+        XCTAssertEqual(ranged.count, 128)
+        XCTAssertEqualWithAccuracy(ranged[0], 0, accuracy: FLT_EPSILON)
+        XCTAssertEqualWithAccuracy(ranged[127], 127, accuracy: FLT_EPSILON)
+    }
+    
+    func testBlockFFT() {
+        let totalSignalLength = 1024 * 1024
+        let blockSize = 8192
+        let skipLength = 256
+
+        let context = FFTContext<SMUGMath.FFTSetup>(length: blockSize)
+        let fakeSignal = Vector<Float>(zeros: totalSignalLength)
+        let blockCount = fakeSignal.count / skipLength
+        
+        for i in 0..<blockCount {
+            var range = (i*skipLength)..<(i*skipLength + blockSize)
+            if ( range.endIndex > fakeSignal.count ) {
+                break
+            }
+            
+            let result = fakeSignal[range].dft(context)
+            let _ = result.abs()[1...result.count/2]
+        }
+    }
 }

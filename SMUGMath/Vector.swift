@@ -17,6 +17,7 @@ public protocol VectorType {
     init(zeros: Int)
     
     subscript(i: Int) -> ElementType { get }
+    subscript(range: Range<Int>) -> Self { get }
 }
 
 public struct Vector<T: FloatingPointType> : VectorType {
@@ -33,6 +34,16 @@ public struct Vector<T: FloatingPointType> : VectorType {
         set {
             components[i] = newValue
         }
+    }
+    
+    public subscript (range: Range<Int>) -> Vector<T> {
+        get {
+            return Vector<T>(components: ContiguousArray<T>(components[range]))
+        }
+    }
+    
+    public init(components: ContiguousArray<T>) {
+        self.components = components
     }
     
     public init(zeros: Int) {
@@ -99,6 +110,15 @@ extension VectorType {
 }
 
 extension VectorType where Self.ElementType == Float {
+    public init(integersRangingFrom from: Float, to: Float, by: Float = 1) {
+        let length = Int(( to - from ) / by)
+        self.init(zeros: length)
+        
+        mutatingOperation { (resultp: UnsafeMutablePointer<Float>, count: Int) -> Void in
+            vDSP_vramp([from], [by], resultp, 1, vDSP_Length(count))
+        }
+    }
+    
     public mutating func add(other: Self) {
         mutatingOperationWith(other, operation: vDSP_vadd)
     }
@@ -124,6 +144,15 @@ extension VectorType where Self.ElementType == Float {
 }
 
 extension VectorType where Self.ElementType == Double {
+    public init(integersRangingFrom from: Double, to: Double, by: Double = 1) {
+        let length = Int(( to - from ) / by)
+        self.init(zeros: length)
+
+        mutatingOperation { (resultp: UnsafeMutablePointer<Double>, count: Int) -> Void in
+            vDSP_vrampD([from], [by], resultp, 1, vDSP_Length(count))
+        }
+    }
+    
     public mutating func add(other: Self) {
         mutatingOperationWith(other, operation: vDSP_vaddD)
     }
