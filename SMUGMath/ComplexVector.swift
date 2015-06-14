@@ -10,15 +10,15 @@ import Foundation
 import Accelerate
 
 public struct Complex<T> {
-    var real: T
-    var imag: T
+    public var real: T
+    public var imag: T
 }
 
 public protocol SplitComplexVectorType {
-    typealias ElementType : FloatingPointType
+    typealias VectorType
     
-    var real: Vector<Self.ElementType> { get }
-    var imag: Vector<Self.ElementType> { get }
+    var real: VectorType { get set }
+    var imag: VectorType { get set }
     
     var count: Int { get }
 }
@@ -27,17 +27,17 @@ public struct SplitComplexVector<T: FloatingPointType> : SplitComplexVectorType 
     public var real: Vector<T>
     public var imag: Vector<T>
     
-    init( real: Vector<T>, imag: Vector<T> ) {
+    public init( real: Vector<T>, imag: Vector<T> ) {
         self.real = real
         self.imag = imag
     }
     
-    init( count: Int, repeatedValue: Complex<T> ) {
+    public init( count: Int, repeatedValue: Complex<T> ) {
         self.real = Vector<T>(zeros: count)
         self.imag = Vector<T>(zeros: count)
     }
     
-    subscript(i: Int) -> Complex<T> {
+    public subscript(i: Int) -> Complex<T> {
         return Complex<T>(real: real[i], imag: imag[i]);
     }
     
@@ -46,6 +46,13 @@ public struct SplitComplexVector<T: FloatingPointType> : SplitComplexVectorType 
             return real.count
         }
     }
+}
+
+extension SplitComplexVector : Equatable {}
+public func ==<V: SplitComplexVectorType where V.VectorType: Equatable>(lhs: V, rhs: V) -> Bool {
+    return
+        lhs.real == rhs.real &&
+        lhs.imag == rhs.imag
 }
 
 extension Complex : CustomStringConvertible {

@@ -27,7 +27,12 @@ public struct Vector<T: FloatingPointType> : VectorType {
     }
     
     public subscript (i: Int) -> T {
-        return components[i]
+        get {
+            return components[i]
+        }
+        set {
+            components[i] = newValue
+        }
     }
     
     public init(zeros: Int) {
@@ -39,20 +44,49 @@ public struct Vector<T: FloatingPointType> : VectorType {
     }
 }
 
+extension Vector : ArrayLiteralConvertible {
+    public init(arrayLiteral elements: T...) {
+        components = ContiguousArray<T>(elements)
+    }
+}
+
+extension Vector : CustomStringConvertible {
+    public var description: String {
+        let maxElements = 25
+        var desc = "["
+        for i in 0..<min(self.count, maxElements) {
+            desc += "\(self[i])";
+            if ( i < self.count - 1 ) {
+                desc += ", "
+            }
+            if ( maxElements != self.count && i == ( maxElements - 1 ) ) {
+                desc += "…"
+            }
+        }
+        desc += "]";
+        return desc;
+    }
+}
+
+extension Vector : Equatable {}
+public func ==<V: VectorType where V.ElementType: Equatable>(lhs: V, rhs: V) -> Bool {
+    return lhs.components == rhs.components
+}
+
 extension VectorType {
     mutating func mutatingOperationWith(other: Self, operation: (UnsafeMutablePointer<ElementType>, UnsafePointer<ElementType>, Int) -> Void ) {
         assert( self.count == other.count )
         
         components.withUnsafeMutableBufferPointer { (inout myPointer: UnsafeMutableBufferPointer<ElementType>) -> Void in
-            other.components.withUnsafeBufferPointer({ (otherPointer: UnsafeBufferPointer<Self.ElementType>) -> Void in
-                operation(myPointer.baseAddress, otherPointer.baseAddress, self.count)
-            })
+            other.components.withUnsafeBufferPointer { (otherPointer: UnsafeBufferPointer<Self.ElementType>) -> Void in
+                operation(myPointer.baseAddress, otherPointer.baseAddress, myPointer.count)
+            }
         }
     }
     
     mutating func mutatingOperation(operation: (UnsafeMutablePointer<ElementType>, Int) -> Void ) {
         components.withUnsafeMutableBufferPointer { (inout myPointer: UnsafeMutableBufferPointer<ElementType>) -> Void in
-            operation(myPointer.baseAddress, self.count)
+            operation(myPointer.baseAddress, myPointer.count)
         }
     }
 
@@ -65,43 +99,51 @@ extension VectorType {
 }
 
 extension VectorType where Self.ElementType == Float {
-    mutating func add(other: Self) {
+    public mutating func add(other: Self) {
         mutatingOperationWith(other, operation: vDSP_vadd)
     }
     
-    mutating func subtract(other: Self) {
+    public mutating func subtract(other: Self) {
         mutatingOperationWith(other, operation: vDSP_vsub)
     }
     
-    mutating func divideBy(other: Self) {
+    public mutating func multiplyBy(other: Self) {
+        mutatingOperationWith(other, operation: vDSP_vmul)
+    }
+    
+    public mutating func divideBy(other: Self) {
         // Operands for vdiv are reversed, and hence require a custom implementation here
         mutatingOperationWith(other) { vDSP_vdiv($1, 1, $0, 1, $0, 1, vDSP_Length($2)) }
     }
     
-    mutating func scaleBy(scalar: Float) {
+    public mutating func scaleBy(scalar: Float) {
         components.withUnsafeMutableBufferPointer { (inout myPointer: UnsafeMutableBufferPointer<ElementType>) -> Void in
-            vDSP_vsmul(myPointer.baseAddress, 1, [scalar], myPointer.baseAddress, 1, vDSP_Length(self.count))
+            vDSP_vsmul(myPointer.baseAddress, 1, [scalar], myPointer.baseAddress, 1, vDSP_Length(myPointer.count))
         }
     }
 }
 
 extension VectorType where Self.ElementType == Double {
-    mutating func add(other: Self) {
+    public mutating func add(other: Self) {
         mutatingOperationWith(other, operation: vDSP_vaddD)
     }
     
-    mutating func subtract(other: Self) {
+    public mutating func subtract(other: Self) {
         mutatingOperationWith(other, operation: vDSP_vsubD)
     }
     
-    mutating func divideBy(other: Self) {
+    public mutating func multiplyBy(other: Self) {
+        mutatingOperationWith(other, operation: vDSP_vmulD)
+    }
+    
+    public mutating func divideBy(other: Self) {
         // Operands for vdiv are reversed, and hence require a custom implementation here
         mutatingOperationWith(other) { vDSP_vdivD($1, 1, $0, 1, $0, 1, vDSP_Length($2)) }
     }
     
-    mutating func scaleBy(scalar: Double) {
+    public mutating func scaleBy(scalar: Double) {
         components.withUnsafeMutableBufferPointer { (inout myPointer: UnsafeMutableBufferPointer<ElementType>) -> Void in
-            vDSP_vsmulD(myPointer.baseAddress, 1, [scalar], myPointer.baseAddress, 1, vDSP_Length(self.count))
+            vDSP_vsmulD(myPointer.baseAddress, 1, [scalar], myPointer.baseAddress, 1, vDSP_Length(myPointer.count))
         }
     }
 }

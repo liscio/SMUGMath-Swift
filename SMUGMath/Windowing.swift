@@ -10,14 +10,14 @@ import Foundation
 import Accelerate
 
 extension VectorType where Self.ElementType == Float {
-    init(hanningWindowOfLength length: Int) {
+    public init(hanningWindowOfLength length: Int) {
         self.init(zeros: length)
         self.mutatingOperation { (myComponentPointer: UnsafeMutablePointer<Float>, length: Int) -> Void in
             vDSP_hann_window(myComponentPointer, vDSP_Length(length), 0)
         }
     }
     
-    init(hammingWindowOfLength length: Int) {
+    public init(hammingWindowOfLength length: Int) {
         self.init(zeros: length)
         self.mutatingOperation { (myComponentPointer: UnsafeMutablePointer<Float>, length: Int) -> Void in
             vDSP_hamm_window(myComponentPointer, vDSP_Length(length), 0)
@@ -26,14 +26,14 @@ extension VectorType where Self.ElementType == Float {
 }
 
 extension VectorType where Self.ElementType == Double {
-    init(hanningWindowOfLength length: Int) {
+    public init(hanningWindowOfLength length: Int) {
         self.init(zeros: length)
         self.mutatingOperation { (myComponentPointer: UnsafeMutablePointer<Double>, length: Int) -> Void in
             vDSP_hann_windowD(myComponentPointer, vDSP_Length(length), 0)
         }
     }
     
-    init(hammingWindowOfLength length: Int) {
+    public init(hammingWindowOfLength length: Int) {
         self.init(zeros: length)
         self.mutatingOperation { (myComponentPointer: UnsafeMutablePointer<Double>, length: Int) -> Void in
             vDSP_hamm_windowD(myComponentPointer, vDSP_Length(length), 0)
