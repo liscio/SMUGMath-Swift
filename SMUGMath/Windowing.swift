@@ -9,7 +9,7 @@
 import Foundation
 import Accelerate
 
-extension VectorType where Self.ElementType == Float {
+extension VectorType where Self.ElementType == Float, CollectionType: Unsafeable, CollectionType.T == Self.ElementType {
     public init(hanningWindowOfLength length: Int) {
         self.init(zeros: length)
         self.mutatingOperation { (myComponentPointer: UnsafeMutablePointer<Float>, length: Int) -> Void in
@@ -25,7 +25,7 @@ extension VectorType where Self.ElementType == Float {
     }
 }
 
-extension VectorType where Self.ElementType == Double {
+extension VectorType where Self.ElementType == Double, CollectionType: Unsafeable, CollectionType.T == Self.ElementType {
     public init(hanningWindowOfLength length: Int) {
         self.init(zeros: length)
         self.mutatingOperation { (myComponentPointer: UnsafeMutablePointer<Double>, length: Int) -> Void in

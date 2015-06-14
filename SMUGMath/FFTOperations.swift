@@ -70,7 +70,7 @@ public struct FFTContext<SetupType: FFTSetupType> : FFTContextType {
     }
 }
 
-extension VectorType where Self.ElementType == Float {
+extension VectorType where Self.ElementType == Float, Self.CollectionType: Unsafeable, Self.CollectionType.T == Self.ElementType {
     public func dft(context: FFTContext<FFTSetup>) -> SplitComplexVector<Float> {
         var splitComplex = SplitComplexVector<Float>(count: self.count / 2, repeatedValue: Complex<Float>(real: 0, imag: 0))
         
@@ -89,7 +89,7 @@ extension VectorType where Self.ElementType == Float {
     }
 }
 
-extension VectorType where Self.ElementType == Double {
+extension VectorType where Self.ElementType == Double, Self.CollectionType: Unsafeable, Self.CollectionType.T == Self.ElementType {
     public func dft(context: FFTContext<FFTSetupD>) -> SplitComplexVector<Double> {
         var splitComplex = SplitComplexVector<Double>(count: self.count / 2, repeatedValue: Complex<Double>(real: 0, imag: 0))
         

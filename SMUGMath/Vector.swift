@@ -11,13 +11,48 @@ import Accelerate
 
 public protocol VectorType {
     typealias ElementType
-    var components: ContiguousArray<ElementType> { get set }
+    typealias CollectionType
+    typealias SliceType
+    
+    var components: CollectionType { get set }
+    init(components: CollectionType)
     
     var count: Int { get }
     init(zeros: Int)
     
     subscript(i: Int) -> ElementType { get }
-    subscript(range: Range<Int>) -> Self { get }
+    subscript(range: Range<Int>) -> SliceType { get }
+}
+
+public struct VectorSlice<T: FloatingPointType> : VectorType {
+    public var components: ArraySlice<T>
+    
+    public var count: Int {
+        return components.count
+    }
+    
+    public subscript(i: Int) -> T {
+        get {
+            return components[i]
+        }
+        set {
+            components[i] = newValue
+        }
+    }
+    
+    public init(components: ArraySlice<T>) {
+        self.components = components
+    }
+    
+    public init(zeros: Int) {
+        components = ArraySlice<T>(ContiguousArray<T>(count: zeros, repeatedValue: ElementType(0)))
+    }
+    
+    public subscript (range: Range<Int>) -> VectorSlice<T> {
+        get {
+            return VectorSlice<T>(components: components[range])
+        }
+    }
 }
 
 public struct Vector<T: FloatingPointType> : VectorType {
@@ -25,6 +60,10 @@ public struct Vector<T: FloatingPointType> : VectorType {
     
     public var count: Int {
         return components.count
+    }
+    
+    public init(components: ContiguousArray<T>) {
+        self.components = components
     }
     
     public subscript (i: Int) -> T {
@@ -36,14 +75,10 @@ public struct Vector<T: FloatingPointType> : VectorType {
         }
     }
     
-    public subscript (range: Range<Int>) -> Vector<T> {
+    public subscript (range: Range<Int>) -> VectorSlice<T> {
         get {
-            return Vector<T>(components: ContiguousArray<T>(components[range]))
+            return VectorSlice<T>(components: components[range])
         }
-    }
-    
-    public init(components: ContiguousArray<T>) {
-        self.components = components
     }
     
     public init(zeros: Int) {
@@ -80,11 +115,17 @@ extension Vector : CustomStringConvertible {
 }
 
 extension Vector : Equatable {}
-public func ==<V: VectorType where V.ElementType: Equatable>(lhs: V, rhs: V) -> Bool {
+extension VectorSlice : Equatable {}
+
+public func ==<T: FloatingPointType>(lhs: Vector<T>, rhs: Vector<T>) -> Bool {
     return lhs.components == rhs.components
 }
 
-extension VectorType {
+public func ==<T: FloatingPointType>(lhs: VectorSlice<T>, rhs: VectorSlice<T>) -> Bool {
+    return lhs.components == rhs.components
+}
+
+extension VectorType where CollectionType: Unsafeable, CollectionType.T == Self.ElementType {
     mutating func mutatingOperationWith(other: Self, operation: (UnsafeMutablePointer<ElementType>, UnsafePointer<ElementType>, Int) -> Void ) {
         assert( self.count == other.count )
         
@@ -109,7 +150,7 @@ extension VectorType {
     }
 }
 
-extension VectorType where Self.ElementType == Float {
+extension VectorType where Self.ElementType == Float, CollectionType: Unsafeable, CollectionType.T == Self.ElementType {
     public init(integersRangingFrom from: Float, to: Float, by: Float = 1) {
         let length = Int(( to - from ) / by)
         self.init(zeros: length)
@@ -143,7 +184,7 @@ extension VectorType where Self.ElementType == Float {
     }
 }
 
-extension VectorType where Self.ElementType == Double {
+extension VectorType where Self.ElementType == Double, CollectionType: Unsafeable, CollectionType.T == Self.ElementType {
     public init(integersRangingFrom from: Double, to: Double, by: Double = 1) {
         let length = Int(( to - from ) / by)
         self.init(zeros: length)

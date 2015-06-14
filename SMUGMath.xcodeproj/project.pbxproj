@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8312190F1B2C92C700B47D78 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8312190E1B2C92C700B47D78 /* Vector.swift */; };
 		831219101B2CDD7F00B47D78 /* FFTOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836426E11955BBAD00356D57 /* FFTOperations.swift */; };
+		831219121B2E2A4000B47D78 /* Unsafeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831219111B2E2A4000B47D78 /* Unsafeable.swift */; };
 		836426C31954D1E100356D57 /* SMUGMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 836426C21954D1E100356D57 /* SMUGMath.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		836426C91954D1E100356D57 /* SMUGMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836426BD1954D1E100356D57 /* SMUGMath.framework */; };
 		836426D01954D1E100356D57 /* SMUGMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836426CF1954D1E100356D57 /* SMUGMathTests.swift */; };
@@ -29,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		8312190E1B2C92C700B47D78 /* Vector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
+		831219111B2E2A4000B47D78 /* Unsafeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Unsafeable.swift; sourceTree = "<group>"; };
 		836426BD1954D1E100356D57 /* SMUGMath.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SMUGMath.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		836426C11954D1E100356D57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		836426C21954D1E100356D57 /* SMUGMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMUGMath.h; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				836426E11955BBAD00356D57 /* FFTOperations.swift */,
 				836426DF1955BB7000356D57 /* Windowing.swift */,
 				8312190E1B2C92C700B47D78 /* Vector.swift */,
+				831219111B2E2A4000B47D78 /* Unsafeable.swift */,
 			);
 			path = SMUGMath;
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				836426E01955BB7000356D57 /* Windowing.swift in Sources */,
+				831219121B2E2A4000B47D78 /* Unsafeable.swift in Sources */,
 				8312190F1B2C92C700B47D78 /* Vector.swift in Sources */,
 				836426DC1955BA7800356D57 /* ComplexVector.swift in Sources */,
 				836426E41955BBE200356D57 /* ComplexVectorOperations.swift in Sources */,
@@ -350,7 +354,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.SuperMegaUltraGroovy.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -370,6 +373,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.SuperMegaUltraGroovy.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};

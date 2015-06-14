@@ -107,7 +107,7 @@ class SMUGMathTests: XCTestCase {
         let largeVector = Vector<Float>(integersRangingFrom:0, to: 2048)
 
         let range = 0..<128
-        let ranged: Vector<Float> = largeVector[range]
+        let ranged = largeVector[range]
         
         XCTAssertEqual(ranged.count, 128)
         XCTAssertEqualWithAccuracy(ranged[0], 0, accuracy: FLT_EPSILON)
