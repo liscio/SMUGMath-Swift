@@ -9,20 +9,38 @@
 import Foundation
 import Accelerate
 
-public func abs( var x: SplitComplexVector<Float> ) -> [Float] {
-    var result = [Float]( count: x.count, repeatedValue: 0 )
+extension SplitComplexVectorType where ElementType == Float {
+    public func abs() -> Vector<Float> {
+        var result = Vector<Float>(zeros: self.count)
+        
+        real.components.withUnsafeBufferPointer { (realP: UnsafeBufferPointer<ElementType>) -> Void in
+            imag.components.withUnsafeBufferPointer { (imagP: UnsafeBufferPointer<ElementType>) -> Void in
+                let splitComplex = DSPSplitComplex(realp: unsafeBitCast(realP.baseAddress, UnsafeMutablePointer<Float>.self), imagp: unsafeBitCast(imagP.baseAddress, UnsafeMutablePointer<Float>.self))
 
-    var dspSplitComplex = DSPSplitComplex( realp: &x.real, imagp: &x.imag )
-    vDSP_zvabs( &dspSplitComplex, 1, &result, 1, vDSP_Length(x.count) )
-    
-    return result
+                result.components.withUnsafeMutableBufferPointer { (inout resultP: UnsafeMutableBufferPointer<ElementType>) -> Void in
+                    vDSP_zvabs([splitComplex], 1, resultP.baseAddress, 1, vDSP_Length(result.count))
+                }
+            }
+        }
+        
+        return result
+    }
 }
 
-public func abs( var x: SplitComplexVector<Double> ) -> [Double] {
-    var result = [Double]( count:x.count, repeatedValue: 0 )
-
-    var dspSplitComplex = DSPDoubleSplitComplex( realp: &x.real, imagp: &x.imag )
-    vDSP_zvabsD( &dspSplitComplex, 1, &result, 1, vDSP_Length(x.count) )
-    
-    return result
+extension SplitComplexVectorType where ElementType == Double {
+    public func abs() -> Vector<Double> {
+        var result = Vector<Double>(zeros: self.count)
+        
+        real.components.withUnsafeBufferPointer { (realP: UnsafeBufferPointer<ElementType>) -> Void in
+            imag.components.withUnsafeBufferPointer { (imagP: UnsafeBufferPointer<ElementType>) -> Void in
+                let splitComplex = DSPDoubleSplitComplex(realp: unsafeBitCast(realP.baseAddress, UnsafeMutablePointer<Double>.self), imagp: unsafeBitCast(imagP.baseAddress, UnsafeMutablePointer<Double>.self))
+                
+                result.components.withUnsafeMutableBufferPointer { (inout resultP: UnsafeMutableBufferPointer<ElementType>) -> Void in
+                    vDSP_zvabsD([splitComplex], 1, resultP.baseAddress, 1, vDSP_Length(result.count))
+                }
+            }
+        }
+        
+        return result
+    }
 }

@@ -7,15 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8312190F1B2C92C700B47D78 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8312190E1B2C92C700B47D78 /* Vector.swift */; };
+		831219101B2CDD7F00B47D78 /* FFTOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836426E11955BBAD00356D57 /* FFTOperations.swift */; };
 		836426C31954D1E100356D57 /* SMUGMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 836426C21954D1E100356D57 /* SMUGMath.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		836426C91954D1E100356D57 /* SMUGMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836426BD1954D1E100356D57 /* SMUGMath.framework */; };
 		836426D01954D1E100356D57 /* SMUGMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836426CF1954D1E100356D57 /* SMUGMathTests.swift */; };
 		836426DC1955BA7800356D57 /* ComplexVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836426DB1955BA7800356D57 /* ComplexVector.swift */; };
-		836426DE1955BB2900356D57 /* RealVectorOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836426DD1955BB2900356D57 /* RealVectorOperations.swift */; };
 		836426E01955BB7000356D57 /* Windowing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836426DF1955BB7000356D57 /* Windowing.swift */; };
-		836426E21955BBAD00356D57 /* FFTOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836426E11955BBAD00356D57 /* FFTOperations.swift */; };
 		836426E41955BBE200356D57 /* ComplexVectorOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836426E31955BBE200356D57 /* ComplexVectorOperations.swift */; };
-		83D9EBEC1A9535F9006A6AF5 /* Unsafeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D9EBEB1A9535F9006A6AF5 /* Unsafeable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8312190E1B2C92C700B47D78 /* Vector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
 		836426BD1954D1E100356D57 /* SMUGMath.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SMUGMath.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		836426C11954D1E100356D57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		836426C21954D1E100356D57 /* SMUGMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMUGMath.h; sourceTree = "<group>"; };
@@ -36,11 +36,9 @@
 		836426CE1954D1E100356D57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		836426CF1954D1E100356D57 /* SMUGMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMUGMathTests.swift; sourceTree = "<group>"; };
 		836426DB1955BA7800356D57 /* ComplexVector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexVector.swift; sourceTree = "<group>"; };
-		836426DD1955BB2900356D57 /* RealVectorOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealVectorOperations.swift; sourceTree = "<group>"; };
 		836426DF1955BB7000356D57 /* Windowing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Windowing.swift; sourceTree = "<group>"; };
 		836426E11955BBAD00356D57 /* FFTOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFTOperations.swift; sourceTree = "<group>"; };
 		836426E31955BBE200356D57 /* ComplexVectorOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexVectorOperations.swift; sourceTree = "<group>"; };
-		83D9EBEB1A9535F9006A6AF5 /* Unsafeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Unsafeable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,12 +83,11 @@
 			children = (
 				836426C21954D1E100356D57 /* SMUGMath.h */,
 				836426C01954D1E100356D57 /* Supporting Files */,
-				83D9EBEB1A9535F9006A6AF5 /* Unsafeable.swift */,
 				836426DB1955BA7800356D57 /* ComplexVector.swift */,
-				836426DD1955BB2900356D57 /* RealVectorOperations.swift */,
 				836426E31955BBE200356D57 /* ComplexVectorOperations.swift */,
 				836426E11955BBAD00356D57 /* FFTOperations.swift */,
 				836426DF1955BB7000356D57 /* Windowing.swift */,
+				8312190E1B2C92C700B47D78 /* Vector.swift */,
 			);
 			path = SMUGMath;
 			sourceTree = "<group>";
@@ -176,7 +173,7 @@
 		836426B41954D1E100356D57 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Christopher Liscio";
 				TargetAttributes = {
 					836426BC1954D1E100356D57 = {
@@ -229,11 +226,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				836426E01955BB7000356D57 /* Windowing.swift in Sources */,
-				836426E21955BBAD00356D57 /* FFTOperations.swift in Sources */,
-				836426DE1955BB2900356D57 /* RealVectorOperations.swift in Sources */,
+				8312190F1B2C92C700B47D78 /* Vector.swift in Sources */,
 				836426DC1955BA7800356D57 /* ComplexVector.swift in Sources */,
 				836426E41955BBE200356D57 /* ComplexVectorOperations.swift in Sources */,
-				83D9EBEC1A9535F9006A6AF5 /* Unsafeable.swift in Sources */,
+				831219101B2CDD7F00B47D78 /* FFTOperations.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +272,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -350,6 +347,7 @@
 				INFOPLIST_FILE = SMUGMath/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.SuperMegaUltraGroovy.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -369,6 +367,7 @@
 				INFOPLIST_FILE = SMUGMath/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.SuperMegaUltraGroovy.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -389,6 +388,7 @@
 				INFOPLIST_FILE = SMUGMathTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				METAL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.SuperMegaUltraGroovy.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -404,6 +404,7 @@
 				INFOPLIST_FILE = SMUGMathTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				METAL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.SuperMegaUltraGroovy.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

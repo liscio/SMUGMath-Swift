@@ -15,7 +15,7 @@ class SMUGMathTests: XCTestCase {
         var a : [Float] = [1, 2, 3]
         var b : [Float] = [1, 2, 3]
         
-        var c = add(a, b)
+        var c = add(a, y: b)
         
         XCTAssertEqualWithAccuracy( c[0], Float(2.0), FLT_EPSILON );
         XCTAssertEqualWithAccuracy( c[1], Float(4.0), FLT_EPSILON );
@@ -23,8 +23,10 @@ class SMUGMathTests: XCTestCase {
     }
     
     func testMultiplication() {
-        var a: [Float] = [1, 2, 3];
-        var b: [Float] = [1, 2, 3];
+        var a: [Double] = [1, 2, 3];
+        var b: [Double] = [1, 2, 3];
+        
+        a.multiplyBy(b).addBy(c)
         
         var c = a * b
         

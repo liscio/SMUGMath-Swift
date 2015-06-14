@@ -9,26 +9,34 @@
 import Foundation
 import Accelerate
 
-func hanning( length: Int ) -> [Float] {
-    var window = [Float](count: length, repeatedValue: 0)
-    vDSP_hann_window( &window, vDSP_Length(window.count), 0 )
-    return window
+extension VectorType where Self.ElementType == Float {
+    init(hanningWindowOfLength length: Int) {
+        self.init(zeros: length)
+        self.mutatingOperation { (myComponentPointer: UnsafeMutablePointer<Float>, length: Int) -> Void in
+            vDSP_hann_window(myComponentPointer, vDSP_Length(length), 0)
+        }
+    }
+    
+    init(hammingWindowOfLength length: Int) {
+        self.init(zeros: length)
+        self.mutatingOperation { (myComponentPointer: UnsafeMutablePointer<Float>, length: Int) -> Void in
+            vDSP_hamm_window(myComponentPointer, vDSP_Length(length), 0)
+        }
+    }
 }
 
-func hanning( length: Int ) -> [Double] {
-    var window = [Double](count: length, repeatedValue: 0)
-    vDSP_hann_windowD( &window, vDSP_Length(window.count), 0 )
-    return window
-}
-
-func hamming( length: Int ) -> [Float] {
-    var window = [Float](count: length, repeatedValue: 0)
-    vDSP_hamm_window( &window, vDSP_Length(window.count), 0 )
-    return window
-}
-
-func hamming( length: Int ) -> [Double] {
-    var window = [Double](count: length, repeatedValue: 0)
-    vDSP_hamm_windowD( &window, vDSP_Length(window.count), 0 )
-    return window
+extension VectorType where Self.ElementType == Double {
+    init(hanningWindowOfLength length: Int) {
+        self.init(zeros: length)
+        self.mutatingOperation { (myComponentPointer: UnsafeMutablePointer<Double>, length: Int) -> Void in
+            vDSP_hann_windowD(myComponentPointer, vDSP_Length(length), 0)
+        }
+    }
+    
+    init(hammingWindowOfLength length: Int) {
+        self.init(zeros: length)
+        self.mutatingOperation { (myComponentPointer: UnsafeMutablePointer<Double>, length: Int) -> Void in
+            vDSP_hamm_windowD(myComponentPointer, vDSP_Length(length), 0)
+        }
+    }
 }

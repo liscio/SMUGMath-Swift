@@ -7,24 +7,34 @@
 //
 
 import Foundation
+import Accelerate
 
 public struct Complex<T> {
     var real: T
     var imag: T
 }
 
-public struct SplitComplexVector<T> {
-    public var real: [T]
-    public var imag: [T]
+public protocol SplitComplexVectorType {
+    typealias ElementType : FloatingPointType
     
-    init( real: [T], imag: [T] ) {
+    var real: Vector<Self.ElementType> { get }
+    var imag: Vector<Self.ElementType> { get }
+    
+    var count: Int { get }
+}
+
+public struct SplitComplexVector<T: FloatingPointType> : SplitComplexVectorType {
+    public var real: Vector<T>
+    public var imag: Vector<T>
+    
+    init( real: Vector<T>, imag: Vector<T> ) {
         self.real = real
         self.imag = imag
     }
     
     init( count: Int, repeatedValue: Complex<T> ) {
-        self.real = [T]( count: count, repeatedValue: repeatedValue.real )
-        self.imag = [T]( count: count, repeatedValue: repeatedValue.imag )
+        self.real = Vector<T>(zeros: count)
+        self.imag = Vector<T>(zeros: count)
     }
     
     subscript(i: Int) -> Complex<T> {
@@ -36,27 +46,15 @@ public struct SplitComplexVector<T> {
             return real.count
         }
     }
-    
-    subscript(range: Range<Int>) -> SplitComplexVector<T> {
-        get {
-            assert( range.startIndex < self.count )
-            assert( range.endIndex < self.count )
-            
-            let rangedReal = Array(real[range])
-            let rangedImag = Array(imag[range])
-            
-            return SplitComplexVector<T>( real: rangedReal, imag: rangedImag )
-        }
-    }
 }
 
-extension Complex : Printable {
+extension Complex : CustomStringConvertible {
     public var description: String {
         return "\(self.real)+\(self.imag)i";
     }
 }
 
-extension SplitComplexVector : Printable {
+extension SplitComplexVector : CustomStringConvertible {
     public var description: String {
         let maxElements = 25
         var desc = "["
